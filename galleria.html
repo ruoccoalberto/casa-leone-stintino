@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>La casa · Galleria · Casa Leone</title>
+<meta name="description" content="Galleria fotografica di Casa Leone a Stintino, Sardegna.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.gallery-page{background:#f7fbfa;color:#075b78;min-height:100vh}
+.gallery-top{padding:34px 6%;display:flex;justify-content:space-between;align-items:center;background:#fff;border-bottom:1px solid #e4efed;position:sticky;top:0;z-index:5}
+.gallery-top .brand-mini{font-family:"Caveat",cursive;font-size:40px;color:#075b78;text-decoration:none}
+.gallery-top a.back{font-family:"Playfair Display",serif;font-size:13px;color:#075b78;text-decoration:none}
+.gallery-hero{text-align:center;padding:72px 20px 38px}
+.gallery-hero .eyebrow{justify-content:center}
+.gallery-hero h1{font-family:"Playfair Display",serif;font-size:54px;line-height:1.05;color:#08708f;margin:12px 0}
+.gallery-hero p{max-width:650px;margin:0 auto;color:#587983;font-family:"Playfair Display",serif;font-size:17px;line-height:1.55}
+.gallery-grid{max-width:1180px;margin:0 auto 80px;padding:0 22px;display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:220px;gap:16px}
+.gallery-item{border:0;padding:0;margin:0;overflow:hidden;border-radius:12px;background:#fff;box-shadow:0 12px 30px rgba(16,76,91,.08);cursor:zoom-in;position:relative}
+.gallery-item img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .45s ease}
+.gallery-item:hover img{transform:scale(1.035)}
+.gallery-item.big{grid-column:span 7;grid-row:span 2}
+.gallery-item.medium{grid-column:span 5}
+.gallery-item.small{grid-column:span 4}
+.gallery-item.wide{grid-column:span 8}
+.gallery-caption{position:absolute;left:0;right:0;bottom:0;padding:18px 16px 14px;background:linear-gradient(transparent,rgba(0,0,0,.52));color:#fff;font-size:13px;font-weight:500;text-align:left}
+.gallery-note{max-width:1120px;margin:0 auto 70px;padding:0 22px;color:#78939a;font-size:11px;line-height:1.6}
+.lightbox{position:fixed;inset:0;background:rgba(5,34,43,.92);display:none;align-items:center;justify-content:center;padding:28px;z-index:20}
+.lightbox.open{display:flex}
+.lightbox img{max-width:min(1100px,95vw);max-height:88vh;object-fit:contain;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.lightbox button{position:absolute;top:18px;right:22px;border:0;background:transparent;color:#fff;font-size:38px;cursor:pointer;line-height:1}
+@media(max-width:800px){.gallery-top{padding:22px}.gallery-top .brand-mini{font-size:32px}.gallery-hero{padding:48px 20px 30px}.gallery-hero h1{font-size:40px}.gallery-grid{grid-auto-rows:180px;gap:10px}.gallery-item.big{grid-column:span 12}.gallery-item.medium,.gallery-item.small,.gallery-item.wide{grid-column:span 6}}
+@media(max-width:520px){.gallery-grid{grid-template-columns:1fr;grid-auto-rows:230px}.gallery-item.big,.gallery-item.medium,.gallery-item.small,.gallery-item.wide{grid-column:span 1}}
+</style>
+</head>
+<body class="gallery-page">
+<header class="gallery-top">
+  <a class="brand-mini" href="index.html">Casa Leone</a>
+  <a class="back" href="index.html#casa">← Torna alla casa</a>
+</header>
+<main>
+<section class="gallery-hero">
+  <div class="eyebrow">LA CASA · GALLERIA</div>
+  <h1>Scopri Casa Leone</h1>
+  <p>Una raccolta di fotografie di Casa Leone.</p>
+</section>
+<section class="gallery-grid" aria-label="Galleria fotografica di Casa Leone">
+  <button class="gallery-item big" data-full="images/hero-home.jpg"><img src="images/hero-home.jpg" alt="Cucina e zona pranzo di Casa Leone"></button>
+  <button class="gallery-item medium" data-full="images/camera.png"><img src="images/camera.png" alt="Camera matrimoniale"></button>
+  <button class="gallery-item medium" data-full="images/bagno.png"><img src="images/bagno.png" alt="Bagno interno"></button>
+  <button class="gallery-item small" data-full="images/veranda.png"><img src="images/veranda.png" alt="Ampia veranda privata"></button>
+  <button class="gallery-item small" data-full="images/pineta.png"><img src="images/pineta.png" alt="Pineta condominiale"></button>
+  <button class="gallery-item small" data-full="images/ingresso.png"><img src="images/ingresso.png" alt="Ingresso di Casa Leone"></button>
+  <button class="gallery-item wide" data-full="images/zona-giorno.png"><img src="images/zona-giorno.png" alt="Zona giorno"></button>
+  <button class="gallery-item small" data-full="images/zona-giorno-2.png"><img src="images/zona-giorno-2.png" alt="Dettaglio della zona giorno"></button>
+</section>
+<p class="gallery-note">Le fotografie della casa sono riferite a Casa Leone. Per disponibilità e informazioni, scrivici direttamente su WhatsApp.</p>
+</main>
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Foto ingrandita">
+  <button id="closeLightbox" aria-label="Chiudi">×</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+<script>
+const lb=document.getElementById('lightbox');
+const lbImg=document.getElementById('lightboxImg');
+document.querySelectorAll('.gallery-item').forEach(item=>item.addEventListener('click',()=>{lbImg.src=item.dataset.full;lbImg.alt=item.querySelector('img').alt;lb.classList.add('open')}));
+document.getElementById('closeLightbox').addEventListener('click',()=>lb.classList.remove('open'));
+lb.addEventListener('click',e=>{if(e.target===lb)lb.classList.remove('open')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open')});
+</script>
+</body>
+</html>
+<!-- Gallery intentionally contains photos only; no room/category labels are displayed. -->
